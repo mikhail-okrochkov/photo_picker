@@ -1,0 +1,9 @@
+venv*
+__pycache__/
+logs/
+*pth
+*xlsx
+*ipynb
+*yaml
+*json
+
