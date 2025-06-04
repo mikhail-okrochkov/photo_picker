@@ -5,11 +5,11 @@ Photo Picker is a Python tool designed to analyze and rank aviation photos, help
 ## Features
 
 - **Photo Quality Assessment**
-  - Subject focus detection
+  - Subject focus detection using Segment Anything Model (SAM)
   - Exposure analysis
   - Sky percentage calculation
   - Halo detection
-  - Airline identification with confidence scoring
+  - Airline identification using CLIP
 
 - **Sequence Detection**
   - Automatically groups similar photos into sequences
@@ -35,14 +35,17 @@ Photo Picker is a Python tool designed to analyze and rank aviation photos, help
 - scikit-image
 - openpyxl
 - Pillow (PIL)
-- ultralytics (YOLO)
+- PyTorch
+- Segment Anything Model (SAM)
+- CLIP
+- rawpy
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/photo_judge.git
-cd photo_judge
+git clone https://github.com/yourusername/photo_picker.git
+cd photo_picker
 ```
 
 2. Install the required packages:
@@ -50,9 +53,10 @@ cd photo_judge
 pip install -r requirements.txt
 ```
 
-3. Download the YOLO model for airline detection:
+3. Download the required models:
 ```bash
-# The model will be downloaded automatically on first run
+# SAM model will be downloaded automatically on first run
+# CLIP model will be downloaded automatically on first run
 ```
 
 ## Usage
@@ -64,26 +68,24 @@ from src.photo_picker import PhotoPicker
 
 # Initialize the photo picker
 picker = PhotoPicker(
-    root_dir="/path/to/photos",
-    output_excel="photo_assessment.xlsx",
-    debug_mode=False  # Set to True for testing with fewer photos
+    config_path="config.yaml",  # Path to your config file
+    debug_mode=False,  # Set to True for testing with fewer photos
+    count_only=False,  # Set to True to only count photos
+    force_reprocess=False,  # Set to True to reprocess all directories
+    log_level="INFO"  # Set logging level
 )
 
 # Process all photos
-picker.process_all_photos()
+picker.run()
 ```
 
-### Configuration Options
+### Configuration File
 
-The `PhotoPicker` class accepts the following parameters:
+Create a YAML or JSON configuration file with the following structure:
 
-- `root_dir`: Path to the root directory containing photos
-- `output_excel`: Path to the output Excel file
-- `debug_mode`: Boolean flag for debug mode (processes fewer photos)
-- `processed_dirs_file`: Path to JSON file tracking processed directories
-- `min_sequence_size`: Minimum number of photos to form a sequence (default: 3)
-- `max_sequence_size`: Maximum number of photos in a sequence (default: 10)
-- `similarity_threshold`: Threshold for considering photos similar (default: 0.85)
+```yaml
+root_directory: "/path/to/your/photos"
+```
 
 ### Output
 
@@ -105,13 +107,14 @@ Photos are organized by year in separate tabs, with rank 1 photos highlighted in
 
 1. **Photo Quality Assessment**
    - Analyzes each photo for focus, exposure, and composition
+   - Uses SAM to detect and segment the main subject
    - Detects sky percentage using color analysis
    - Identifies halos around aircraft
-   - Uses YOLO model to detect and identify airlines
+   - Uses CLIP model to detect and identify airlines
 
 2. **Sequence Detection**
-   - Groups photos taken within 2 seconds of each other
-   - Calculates similarity between photos using feature matching
+   - Groups photos taken within 30 seconds of each other
+   - Calculates similarity between photos using histogram comparison
    - Forms sequences of similar photos
    - Ranks photos within each sequence based on quality metrics
 
@@ -131,6 +134,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- YOLO model for airline detection
+- Segment Anything Model (SAM) for subject detection
+- CLIP for airline identification
 - OpenCV for image processing
 - scikit-image for advanced image analysis

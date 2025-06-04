@@ -1,0 +1,14 @@
+# Photo Picker Configuration
+# Copy this file to config.yaml and modify the paths as needed
+
+# Root directory containing your photos
+# This should be the top-level directory where your photos are stored
+# Example: "/home/user/Pictures/Aviation" or "C:/Users/User/Pictures/Aviation"
+root_directory: "/path/to/your/photos"
+
+# Optional settings (uncomment to use)
+# output_excel: "photo_assessment.xlsx"  # Default: "photo_assessment.xlsx"
+# processed_dirs_file: "processed_directories.json"  # Default: "processed_directories.json"
+# min_sequence_size: 3  # Default: 3
+# max_sequence_size: 10  # Default: 10
+# similarity_threshold: 0.85  # Default: 0.85 

@@ -3,14 +3,11 @@ import cv2
 import numpy as np
 import os
 from datetime import datetime
-from collections import defaultdict
-from typing import List, Dict, Tuple, Optional
-from multiprocessing import Pool, cpu_count
+from typing import List, Dict, Optional
 import torch
 from segment_anything import sam_model_registry, SamPredictor
 import clip
 from PIL import Image
-import pandas as pd
 import openpyxl
 import argparse
 import json
