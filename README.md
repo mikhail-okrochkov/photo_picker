@@ -63,6 +63,27 @@ pip install -r requirements.txt
 
 ### Basic Usage
 
+#### Command Line Interface
+
+```bash
+# Basic usage with default settings
+python photo_picker.py --config [path to config.yaml]
+
+# Debug mode (processes only 5 photos per directory)
+python photo_picker.py --config [path to config.yaml] --debug
+
+# Count photos without processing them
+python photo_picker.py --config [path to config.yaml] --count-only
+
+# Force reprocessing of all directories
+python photo_picker.py --config [path to config.yaml] --force
+
+# Set logging level
+python photo_picker.py --config [path to config.yaml] --log-level DEBUG
+```
+
+#### Python API
+
 ```python
 from src.photo_picker import PhotoPicker
 
